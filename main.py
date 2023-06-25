@@ -45,7 +45,7 @@
 # else:
 #   print("Congratulations on becoming on adult!")
 
-#3.4
+# 3.4
 """
 from random import randint
 
@@ -61,7 +61,7 @@ elif user_choice < pc_choice:
   print("Skill issue, go higher. PC chose", pc_choice)
 """
 
-#3.5
+# 3.5
 """
 size = 0
 while size <= 20:
@@ -69,7 +69,7 @@ while size <= 20:
   size = size + 1
   """
 
-#3.6 & #3.7
+# 3.6 & #3.7
 """
 from random import randint
 
@@ -88,7 +88,7 @@ while playing:
     print("Skill issue, go higher.")
   """
 
-#4.0 | Homework: Find out the shortcut for emoji keyboard
+# 4.0 | Homework: Find out the shortcut for emoji keyboard
 """
 days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
@@ -99,7 +99,7 @@ days_of_week.append(["Saturday", "Sunday"])
 print(days_of_week)
 """
 
-#4.2
+# 4.2
 """
 pies = ["Apple", "Peach", "Grape","Cream 😩"]
 
@@ -107,7 +107,7 @@ print(pies)
 
 """
 
-#4.3
+# 4.3
 """
 player = {
   'name': 'Paul',
@@ -121,7 +121,7 @@ print(player)
 player.pop('lactose')
 print(player)
 #"""
-#4.5 - #4.8
+# 4.5 - #4.8
 """
 
 from requests import get
@@ -162,9 +162,9 @@ print(results)
 # 1 : 3
 # 2 : 5
 # 3 : 7
-# 4 : 9 
+# 4 : 9
 
-#nums = [9,1,3,5,7,9,11,13]
+# nums = [9,1,3,5,7,9,11,13]
 
 # enum = enumerate(nums)
 
@@ -180,37 +180,33 @@ print(results)
 # print(nums[0])
 # print(nums[1:3])
 
-#print(nums[1:6:2])
+# print(nums[1:6:2])
 
 # print(len(nums))
 # print(min(nums))
 # print(max(nums))
 
-#print(nums.index(x[, 0[, 7]]))
-#print(nums.count(1))
-
-
-
-
+# print(nums.index(x[, 0[, 7]]))
+# print(nums.count(1))
 
 
 # for index, num in enumerate(nums):
 #   if num % 2 == 0:
 #     print(num, " : ","even")
-#   else:  
+#   else:
 #     print(num, " : ","odd")
 
 # for num in range(10):
 #   if num % 2 == 0:
 #     print(num, " : ","even")
-#   else:  
+#   else:
 #     print(num, " : ","odd")
-     
+
 
 # for num in (range(9)):
-#   print(num) 
+#   print(num)
 
-#2 x 1 = 2
+# 2 x 1 = 2
 
 # #5-3
 # from requests import get
@@ -225,6 +221,22 @@ print(results)
 #   print(response.text)
 
 # #5-4
+
+# from bs4 import BeautifulSoup
+# og_url = "https://weworkremotely.com/remote-jobs/search?utf8=&term="
+# searched_term = "python"
+
+# response = get(f"{og_url}{searched_term}")
+# if response.status_code != 200:
+#   print("Can't request website")
+# else:
+#   soup = BeautifulSoup(response.text, "html.parser")
+#   print(soup.find_all('section', class_="jobs"))
+# print("Initial Commit")
+# print("Hello !!")
+
+
+#5-8
 from requests import get
 from bs4 import BeautifulSoup
 
@@ -235,8 +247,26 @@ response = get(f"{og_url}{searched_term}")
 if response.status_code != 200:
   print("Can't request website")
 else:
+  results = []
   soup = BeautifulSoup(response.text, "html.parser")
-  print(soup.find_all('section', class_="jobs"))
-# print("Initial Commit")
-# print("Hello !!")
+  jobs = soup.find_all('section', class_="jobs")
+  for job_section in jobs:
+    job_posts = job_section.find_all('li')
+    job_posts.pop(-1)
+    for post in job_posts:
+      anchors = post.find_all('a')
+      anchor = anchors[1]
+      link = anchor['href']
+      company, kind, region = anchor.find_all('span', class_='company')
 
+      title = anchor.find('span', class_='title')
+      job_data = {
+        'company': company.string,
+        'region': region.string,
+        'position': title.string
+      }
+      results.append(job_data)
+      #print(company.string, kind.string, region.string, title.string)
+for result in results:
+  print(result)
+  print("///////////////////")
