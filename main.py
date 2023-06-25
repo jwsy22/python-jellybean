@@ -237,6 +237,6 @@ if response.status_code != 200:
 else:
   soup = BeautifulSoup(response.text, "html.parser")
   print(soup.find_all('section', class_="jobs"))
-print("Initial Commit")
-print("Hello !!")
+# print("Initial Commit")
+# print("Hello !!")
 
