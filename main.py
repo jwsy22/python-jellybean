@@ -271,11 +271,23 @@ print(results)
 #   print(result)
 #   print("///////////////////")
 
-for nums in range(2, 10):
-  n = 1
-  while n < 10:
-    print(f"{nums} x {n} = {nums*n}") 
-    n = n+1
-    if n == 10:
-      print()
-      
+# for nums in range(2, 10):
+#   n = 1
+#   while n < 10:
+#     print(f"{nums} x {n} = {nums*n}") 
+#     n = n+1
+#     if n == 10:
+#       print()
+
+
+# print(abs(10))
+# print(abs(-10))
+
+# print (max( 4,12,43.3,19,100 ) )
+
+print("What Dan?")
+input_dan = int(input())
+print(f"inputed : {input_dan}")
+
+for num in range(9):
+  print(f"{input_dan} x {num+1} = {input_dan * (num+1)}")
