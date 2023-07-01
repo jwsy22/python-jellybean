@@ -295,11 +295,20 @@ print(results)
 # for num in range(9):
 #   print(f"{input_dan} x {num+1} = {input_dan * (num+1)}")
 
-#5.10
-# from requests import get
-# from bs4 import BeautifulStoneSoup
+#5.10-5.11
+from requests import get
+from bs4 import BeautifulStoneSoup
 from extractors.wwr import extract_wwr_jobs
 
-jobs = extract_wwr_jobs("python")
-print(jobs)
+#jobs = extract_wwr_jobs("python")
+#print(jobs)
 
+base_url = "https://kr.indeed.com/jobs?q="
+search_term = "python"
+
+response = get(f"{base_url}{search_term}")
+
+if response.status_code != 200:
+    print("Cannot request page")
+else:
+    print(response.text)
