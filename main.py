@@ -295,7 +295,7 @@ print(results)
 # for num in range(9):
 #   print(f"{input_dan} x {num+1} = {input_dan * (num+1)}")
 
-#5.10-5.11
+#5.10
 from requests import get
 from bs4 import BeautifulStoneSoup
 from extractors.wwr import extract_wwr_jobs
@@ -311,4 +311,9 @@ response = get(f"{base_url}{search_term}")
 if response.status_code != 200:
     print("Cannot request page")
 else:
-    print(response.text)
+    soup = BeautifulSoup(response.text, "html.parser")
+    job_list = soup.find("ul", class_="jobsearch-ResultsList")
+    jobs = job_list.find_all('li', recursive=False)
+    for job in jobs:
+      print(jobs)
+      print("/////////")
