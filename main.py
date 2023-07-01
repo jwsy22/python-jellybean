@@ -296,9 +296,9 @@ print(results)
 #   print(f"{input_dan} x {num+1} = {input_dan * (num+1)}")
 
 #5.10
-from requests import get
-from bs4 import BeautifulStoneSoup
-from extractors.wwr import extract_wwr_jobs
+# from requests import get
+# from bs4 import BeautifulStoneSoup
+# from extractors.wwr import extract_wwr_jobs
 
 #jobs = extract_wwr_jobs("python")
 #print(jobs)
@@ -320,14 +320,68 @@ from extractors.wwr import extract_wwr_jobs
 
 # 
 
-from requests import get
+# from requests import get
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options
+
+# options = Options()
+# options.add_experimental_option("detach", True)  # 브라우저 꺼짐 방지 코드
+# browser = webdriver.Chrome(options=options)
+# browser.get(
+#     'https://kr.indeed.com/jobs?q=python&l=&from=searchOnHP&vjk=89395b6ac5014113')
+
+# print(browser.page_source)
+
+# jobs = extract_wwr_jobs("python")
+# print(jobs)
+
+# base_url = "https://kr.indeed.com/jobs?q="
+# search_term = "python"
+
+# response = get(f"{base_url}{search_term}")
+
+# if response.status_code != 200:
+#     print("Cannot request page")
+# else:
+#     soup = BeautifulSoup(response.text, "html.parser")
+#     job_list = soup.find("ul", class_="jobsearch-ResultsList")
+#     jobs = job_list.find_all('li', recursive=False)
+#     for job in jobs:
+#       zone = job.find("div", class_="mosiac-zone")
+#       if zone == None:
+#          print("Job li")
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from bs4 import BeautifulSoup
 
 options = Options()
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
 options.add_experimental_option("detach", True)  # 브라우저 꺼짐 방지 코드
 browser = webdriver.Chrome(options=options)
 browser.get(
-    'https://kr.indeed.com/jobs?q=python&l=&from=searchOnHP&vjk=89395b6ac5014113')
+    'https://kr.indeed.com/jobs?q=python')
 
-print(browser.page_source)
+soup = BeautifulSoup(browser.page_source, "html.parser")
+job_list = soup.find("ul", class_="jobsearch-ResultsList")
+
+jobs = job_list.find_all('li', recursive=False)
+
+for job in jobs:
+    zone = job.find("div", class_="mosaic-zone")
+    if zone == None:
+    #     print("job li")
+    # else:
+    #     print("mosaic li")
+      anchor = job.select_one("h2 a")
+      title = anchor['aria-label']
+      link = anchor['href']
+      company = job.find("span", class_="companyName")
+      location = job.find("div", class_="companyLocation")
+      job_data = {
+         'link' : f"https://kr.indeed.com{link}",
+         'company': company.string,
+         'location': location.string,
+         'position': title
+      }
