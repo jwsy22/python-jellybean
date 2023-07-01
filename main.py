@@ -303,17 +303,31 @@ from extractors.wwr import extract_wwr_jobs
 #jobs = extract_wwr_jobs("python")
 #print(jobs)
 
-base_url = "https://kr.indeed.com/jobs?q="
-search_term = "python"
+# base_url = "https://kr.indeed.com/jobs?q="
+# search_term = "python"
 
-response = get(f"{base_url}{search_term}")
+# response = get(f"{base_url}{search_term}")
 
-if response.status_code != 200:
-    print("Cannot request page")
-else:
-    soup = BeautifulSoup(response.text, "html.parser")
-    job_list = soup.find("ul", class_="jobsearch-ResultsList")
-    jobs = job_list.find_all('li', recursive=False)
-    for job in jobs:
-      print(jobs)
-      print("/////////")
+# if response.status_code != 200:
+#     print("Cannot request page")
+# else:
+#     soup = BeautifulSoup(response.text, "html.parser")
+#     job_list = soup.find("ul", class_="jobsearch-ResultsList")
+#     jobs = job_list.find_all('li', recursive=False)
+#     for job in jobs:
+#       print(jobs)
+#       print("/////////")
+
+# 
+
+from requests import get
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+options = Options()
+options.add_experimental_option("detach", True)  # 브라우저 꺼짐 방지 코드
+browser = webdriver.Chrome(options=options)
+browser.get(
+    'https://kr.indeed.com/jobs?q=python&l=&from=searchOnHP&vjk=89395b6ac5014113')
+
+print(browser.page_source)
