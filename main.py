@@ -285,9 +285,21 @@ print(results)
 
 # print (max( 4,12,43.3,19,100 ) )
 
-print("What Dan?")
-input_dan = int(input())
-print(f"inputed : {input_dan}")
 
-for num in range(9):
-  print(f"{input_dan} x {num+1} = {input_dan * (num+1)}")
+# Intermission: Gugudan
+
+# print("What Dan?")
+# input_dan = int(input())
+# print(f"inputed : {input_dan}")
+
+# for num in range(9):
+#   print(f"{input_dan} x {num+1} = {input_dan * (num+1)}")
+
+#5.10
+# from requests import get
+# from bs4 import BeautifulStoneSoup
+from extractors.wwr import extract_wwr_jobs
+
+jobs = extract_wwr_jobs("python")
+print(jobs)
+
